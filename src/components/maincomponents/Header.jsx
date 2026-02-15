@@ -28,7 +28,7 @@ export default function Header() {
 
           {/* Desktop Navigation – no dropdowns, just top-level links */}
           <nav className="hidden lg:flex items-center gap-10 text-gray-700 font-medium">
-            <Link to="/shop" className="hover:text-amber-700 transition-colors">
+            <Link to="/" className="hover:text-amber-700 transition-colors">
               Shop
             </Link>
             <Link to="/meat" className="hover:text-amber-700 transition-colors">
@@ -48,7 +48,7 @@ export default function Header() {
               Login
             </Link>
             <Link 
-              to="/signup"
+              to="/register"
               className="bg-amber-600 text-white px-5 py-2 rounded-lg hover:bg-amber-700 transition-colors font-medium"
             >
               Sign up
@@ -203,7 +203,7 @@ export default function Header() {
               >
                 <img src={cart_icon} alt="Cart" className="h-6 w-6" />
                 Cart
-                <span className="bg-red-500 text-white text-xs px-2 py-1 rounded-full">3</span>
+                <span className="bg-red-500 text-white text-xs px-2 py-1 rounded-full">1</span>
               </Link>
             </div>
           </div>
