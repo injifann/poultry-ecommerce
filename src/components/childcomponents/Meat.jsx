@@ -7,6 +7,8 @@ import p1 from '../../assets/images/cookedmeat4.webp';
 import p2 from '../../assets/images/cookedmeat3.webp';
 import p3 from '../../assets/images/cookedmeat2.webp';
 import p4 from '../../assets/images/cookedmeat1.webp';
+import { ProductQuantity } from '../../hooks/ProductQuantity';
+
 
 const meatProducts = [
   { id: 1, name: "Cooked Meet beef", image: p4, price: 320, originalPrice: 380, weight: "1 kg", badge: "Fresh", subcategory: "Cooked meat" },
@@ -17,6 +19,12 @@ const meatProducts = [
 ];
 
 export default function Meat() {
+
+  const {
+    getQuantity,
+    updateQuantity,
+  } = ProductQuantity()
+
   const [selectedSubcategory, setSelectedSubcategory] = useState('All');
   const [sortBy, setSortBy] = useState('Featured');
 
@@ -45,6 +53,7 @@ export default function Meat() {
   } else if (sortBy === 'Price: High to Low') {
     displayedProducts = [...displayedProducts].sort((a, b) => b.price - a.price);
   }
+
 
   return (
     <div className="bg-gray-50 min-h-screen py-12">
@@ -117,7 +126,10 @@ export default function Meat() {
               originalPrice={product.originalPrice}
               weight={product.weight}
               badge={product.badge}
-              onAddToCart={() => console.log(`Added ${product.name} to cart`)}
+              isInStock={true}           // ← you can make dynamic later
+              quantity={getQuantity(product.id)}
+              onIncrease={() => updateQuantity(product.id, 1)}
+              onDecrease={() => updateQuantity(product.id, -1)}
             />
           ))}
         </div>

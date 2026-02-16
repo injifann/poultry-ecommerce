@@ -3,6 +3,8 @@ import { useState,useEffect } from 'react';
 import ProductCard from '../Cards/Product'
 import {Link} from 'react-router-dom';
 import { useSearchParams } from 'react-router-dom';
+import { ProductQuantity } from '../../hooks/ProductQuantity';
+
 
 
 
@@ -14,6 +16,12 @@ const toolsProducts = [
 ];
 
 export default function Tools() {
+
+   const {
+    getQuantity,
+    updateQuantity,
+  } = ProductQuantity()
+
   const [selectedSubcategory, setSelectedSubcategory] = useState('All');
   const [sortBy, setSortBy] = useState('Featured');
 
@@ -74,7 +82,10 @@ useEffect(() => {
               originalPrice={product.originalPrice}
               weight={product.weight}
               badge={product.badge}
-              onAddToCart={() => console.log(`Added ${product.name} to cart`)}
+              isInStock={true}   
+              quantity={getQuantity(product.id)}
+              onIncrease={() => updateQuantity(product.id, 1)}
+              onDecrease={() => updateQuantity(product.id, -1)}
             />
           ))}
         </div>

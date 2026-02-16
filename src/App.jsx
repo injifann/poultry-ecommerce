@@ -10,15 +10,18 @@ import Shop from "./components/childcomponents/Shop"
 import Tools from "./components/childcomponents/Tools"
 import Meat from "./components/childcomponents/Meat"
 import Login from "./components/childcomponents/Login"
+import Cart from "./components/childcomponents/Cart"
 import Registration from "./components/childcomponents/Registration"
+import {CartProvider} from './context/CartContext';
 import {BrowserRouter, Route, Routes} from 'react-router-dom'
+
 
 
 function App() {
 
 
   return (
-
+<CartProvider>
    <Routes>
     
       <Route element={<AuthLayout/>}>
@@ -39,8 +42,11 @@ function App() {
         </Route>
         <Route path="/meat" element={<Meat/>}>
         </Route>
+        <Route path="/cart" element={<Cart/>}>
+        </Route>
      </Route>
    </Routes>
+   </CartProvider>
 
   )
   

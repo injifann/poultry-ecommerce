@@ -4,6 +4,8 @@ import arrow from '../../assets/images/arrow.png';
 import hero_img from '../../assets/images/hero.jpg';   
 
 import ProductCard from '../Cards/Product'; 
+import { ProductQuantity } from '../../hooks/ProductQuantity';
+
 
 // Sample latest products 
 const latestProducts = [
@@ -48,6 +50,11 @@ const latestProducts = [
 ];
 
 export default function Shop() {
+   const {
+    getQuantity,
+    updateQuantity,
+  } = ProductQuantity()
+  
   return (
     <div className="min-h-screen bg-gray-50">
 
@@ -130,7 +137,9 @@ export default function Shop() {
                 weight={product.weight}
                 badge={product.badge}
                 isInStock={product.isInStock}
-                onAddToCart={(id) => console.log(`Added product ${id} to cart`)}
+                quantity={getQuantity(product.id)}
+                onIncrease={() => updateQuantity(product.id, 1)}
+                onDecrease={() => updateQuantity(product.id, -1)}
               />
             ))}
           </div>

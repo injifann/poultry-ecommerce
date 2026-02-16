@@ -2,6 +2,8 @@
 import { useState, useEffect } from 'react';
 import ProductCard from '../Cards/Product';
 import { useSearchParams } from 'react-router-dom';
+import { ProductQuantity } from '../../hooks/ProductQuantity';
+
 
 const eggsProducts = [
   {
@@ -40,40 +42,49 @@ const eggsProducts = [
     badge: "Local Farm",
     subcategory: "Fresh Eggs",
   },
-  // You can add more products here
 ];
 
+
 export default function Eggs() {
-  const [selectedSubcategory, setSelectedSubcategory] = useState('All');
-  const [sortBy, setSortBy] = useState('Featured');
 
-  const [searchParams] = useSearchParams();
-  const sub = searchParams.get('sub');
+        const {
+          getQuantity,
+          updateQuantity,
+        } =ProductQuantity()
 
-  useEffect(() => {
-    if (sub) {
-      const categoryMap = {
-        fresh: 'Fresh Eggs',
-        product: 'Product of Egg',
-      };
-      setSelectedSubcategory(categoryMap[sub] || 'All');
-    }
-  }, [sub]);
+        const [selectedSubcategory, setSelectedSubcategory] = useState('All');
+        const [sortBy, setSortBy] = useState('Featured');
 
-  let displayedProducts = eggsProducts;
+        const [searchParams] = useSearchParams();
+        const sub = searchParams.get('sub');
 
-  if (selectedSubcategory !== 'All') {
-    displayedProducts = eggsProducts.filter(
-      (p) => p.subcategory === selectedSubcategory
-    );
-  }
+        useEffect(() => {
+          if (sub) {
+            const categoryMap = {
+              fresh: 'Fresh Eggs',
+              product: 'Product of Egg',
+            };
+            setSelectedSubcategory(categoryMap[sub] || 'All');
+          }
+        }, [sub]);
 
-  // Sorting logic
-  if (sortBy === 'Price: Low to High') {
-    displayedProducts = [...displayedProducts].sort((a, b) => a.price - b.price);
-  } else if (sortBy === 'Price: High to Low') {
-    displayedProducts = [...displayedProducts].sort((a, b) => b.price - a.price);
-  }
+        let displayedProducts = eggsProducts;
+
+        if (selectedSubcategory !== 'All') {
+          displayedProducts = eggsProducts.filter(
+            (p) => p.subcategory === selectedSubcategory
+          );
+        }
+
+        // Sorting
+        if (sortBy === 'Price: Low to High') {
+          displayedProducts = [...displayedProducts].sort((a, b) => a.price - b.price);
+        } else if (sortBy === 'Price: High to Low') {
+          displayedProducts = [...displayedProducts].sort((a, b) => b.price - a.price);
+        }
+
+
+  
 
   return (
     <div className="bg-gray-50 min-h-screen py-12">
@@ -93,7 +104,6 @@ export default function Eggs() {
             >
               All
             </button>
-
             <button
               onClick={() => setSelectedSubcategory('Fresh Eggs')}
               className={`px-5 py-2.5 rounded-full font-medium transition-colors ${
@@ -104,7 +114,6 @@ export default function Eggs() {
             >
               Fresh Eggs
             </button>
-
             <button
               onClick={() => setSelectedSubcategory('Product of Egg')}
               className={`px-5 py-2.5 rounded-full font-medium transition-colors ${
@@ -132,25 +141,27 @@ export default function Eggs() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {displayedProducts.map((product) => (
             <ProductCard
-              key={product.id}
-              id={product.id}
-              name={product.name}
-              image={product.image}
-              price={product.price}
-              originalPrice={product.originalPrice}
-              weight={product.weight}
-              badge={product.badge}
-              onAddToCart={() => console.log(`Added ${product.name} to cart`)}
-            />
-          ))}
+            id={product.id}
+            name={product.name}
+            image={product.image}
+            price={product.price}
+            originalPrice={product.originalPrice}
+            weight={product.weight}
+            badge={product.badge}
+            isInStock={true}   
+            quantity={getQuantity(product.id)}
+            onIncrease={() => updateQuantity(product.id, 1)}
+            onDecrease={() => updateQuantity(product.id, -1)}        // ← you can make dynamic later
+        
+/>
+          ))
+          
+          }
+          
         </div>
-
-        {displayedProducts.length === 0 && (
-          <p className="text-center text-gray-600 mt-12 text-lg">
-            No products found.
-          </p>
-        )}
       </div>
     </div>
+    
   );
+  
 }
