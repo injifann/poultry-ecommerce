@@ -5,56 +5,20 @@ import hero_img from '../../assets/images/hero.jpg';
 
 import ProductCard from '../Cards/Product'; 
 import { ProductQuantity } from '../../hooks/ProductQuantity';
-
+import {Product} from '../../../src/data/Product'
+import { useState } from 'react';
 
 // Sample latest products 
-const latestProducts = [
-  {
-    id: 1,
-    name: "Fresh Whole Chicken",
-    image: "https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=800",
-    price: 280,
-    originalPrice: 320,
-    weight: "1.5 kg",
-    badge: "New",
-    isInStock: true,
-  },
-  {
-    id: 2,
-    name: "Organic Eggs Tray (30 pcs)",
-    image: "https://images.unsplash.com/photo-1582721478774-dbb6205b91a0?w=800",
-    price: 195,
-    weight: "30 eggs",
-    badge: "Best Seller",
-    isInStock: true,
-  },
-  {
-    id: 3,
-    name: "Premium Chicken Feed (10 kg)",
-    image: "https://images.unsplash.com/photo-1589927986089-35812388aa8b?w=800",
-    price: 480,
-    weight: "10 kg",
-    badge: "New",
-    isInStock: false,
-  },
-  {
-    id: 4,
-    name: "Cooked Chicken Wings (500g)",
-    image: "https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?w=800",
-    price: 190,
-    originalPrice: 230,
-    weight: "500 g",
-    badge: "Hot",
-    isInStock: true,
-  },
-];
+const latestProducts = Product;
 
 export default function Shop() {
    const {
     getQuantity,
     updateQuantity,
   } = ProductQuantity()
-  
+
+  const [showAll, setShowAll] = useState(false);
+
   return (
     <div className="min-h-screen bg-gray-50">
 
@@ -125,29 +89,29 @@ export default function Shop() {
           </div>
 
           {/* Product Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
-            {latestProducts.map((product) => (
-              <ProductCard
-                key={product.id}
-                id={product.id}
-                name={product.name}
-                image={product.image}
-                price={product.price}
-                originalPrice={product.originalPrice}
-                weight={product.weight}
-                badge={product.badge}
-                isInStock={product.isInStock}
-                quantity={getQuantity(product.id)}
-                onIncrease={() => updateQuantity(product.id, 1)}
-                onDecrease={() => updateQuantity(product.id, -1)}
-              />
-            ))}
-          </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
+                {(showAll ? latestProducts : latestProducts.slice(0, 8)).map((product) => (
+                  <ProductCard
+                    key={product.id}
+                    id={product.id}
+                    name={product.name}
+                    image={product.image}
+                    price={product.price}
+                    originalPrice={product.originalPrice}
+                    weight={product.weight}
+                    badge={product.badge}
+                    isInStock={product.isInStock}
+                    quantity={getQuantity(product.id)}
+                    onIncrease={() => updateQuantity(product.id, 1)}
+                    onDecrease={() => updateQuantity(product.id, -1)}
+                  />
+                ))}
+              </div>
 
           {/* View More */}
           <div className="text-center mt-12">
             <a
-              href="/shop"
+              onClick={() => setShowAll(true)}
               className="
                 inline-block px-10 py-4 bg-amber-600 hover:bg-amber-700 
                 text-white font-semibold rounded-xl shadow-lg 

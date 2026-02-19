@@ -15,7 +15,6 @@ export default function ProductCard(props) {
     quantity=1,           // ← new: controlled from parent
     onIncrease,             // ← new: parent handler
     onDecrease,             // ← new: parent handler
-    onAddToCart,            // ← now receives (id, quantity)
   } = props;
   
 
@@ -27,10 +26,10 @@ export default function ProductCard(props) {
 
 
   const { addToCart } = useCart();
-  const [localQty, setLocalQty] = useState(1);   // local only for this card
 
   const handleAdd = () => {
-    addToCart({ id, name, price, image, weight, quantity: localQty });   
+    addToCart({ id, name, price, image, weight, quantity });   
+    console.log('quantity sent:', quantity);
   };
 
   return (
@@ -144,7 +143,7 @@ export default function ProductCard(props) {
           </button>
         </div>
 
-        {/* Optional wishlist heart (kept from your original) */}
+        {/*wishlist heart */}
         <button className="absolute top-3 right-3 p-2 rounded-full bg-white/80 hover:bg-white shadow-sm transition-colors">
           <svg className="w-5 h-5 text-gray-600 hover:text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />

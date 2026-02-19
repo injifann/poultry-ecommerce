@@ -3,20 +3,9 @@
 import { useState, useEffect } from 'react';          // ← add useEffect here
 import ProductCard from '../Cards/Product';
 import { useSearchParams } from 'react-router-dom';
-import p1 from '../../assets/images/cookedmeat4.webp';
-import p2 from '../../assets/images/cookedmeat3.webp';
-import p3 from '../../assets/images/cookedmeat2.webp';
-import p4 from '../../assets/images/cookedmeat1.webp';
 import { ProductQuantity } from '../../hooks/ProductQuantity';
 
-
-const meatProducts = [
-  { id: 1, name: "Cooked Meet beef", image: p4, price: 320, originalPrice: 380, weight: "1 kg", badge: "Fresh", subcategory: "Cooked meat" },
-  { id: 2, name: "Cooked meat isolated on white",  image: p3, price: 250, weight: "2 kg live weight", badge: "Organic", subcategory: "Cooked meat" },
-  { id: 3, name: "Cooked meat",  image: p2, price: 180, originalPrice: 220, weight: "500g", subcategory: "Cooked meat" },
-  { id: 4, name: "Cooked meat on plate",       image: p1, price: 450, weight: "1 kg", badge: "Premium", subcategory: "Cooked meat" },
-  // ... more products
-];
+import {Product} from '../../../src/data/Product';
 
 export default function Meat() {
 
@@ -24,6 +13,8 @@ export default function Meat() {
     getQuantity,
     updateQuantity,
   } = ProductQuantity()
+
+    const meatProducts = Product.filter(p => p.category === "Meat");
 
   const [selectedSubcategory, setSelectedSubcategory] = useState('All');
   const [sortBy, setSortBy] = useState('Featured');

@@ -4,16 +4,8 @@ import ProductCard from '../Cards/Product'
 import {Link} from 'react-router-dom';
 import { useSearchParams } from 'react-router-dom';
 import { ProductQuantity } from '../../hooks/ProductQuantity';
+import {Product} from '../../../src/data/Product';
 
-
-
-
-const toolsProducts = [
-  { id: 1, name: "Automatic Chicken Feeder", image: "https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?w=800", price: 450, weight: "5 kg", badge: "Durable", subcategory: "Feeding tools" },
-  { id: 2, name: "Poultry Water Dispenser",  image: "https://images.unsplash.com/photo-1597843783204-4b6066453a01?w=800", price: 300, originalPrice: 350, weight: "2 kg", badge: "Easy Clean", subcategory: "Watering tools" },
-  { id: 3, name: "Egg Incubator (24 eggs)",  image: "https://images.unsplash.com/photo-1587573089570-2302fe6f9142?w=800", price: 1200, weight: "10 kg", subcategory: "Breeding tools" },
-  { id: 4, name: "Feed Scoop Set",           image: "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=800", price: 150, weight: "1 kg", badge: "Stainless Steel", subcategory: "Feeding tools" },
-];
 
 export default function Tools() {
 
@@ -21,6 +13,8 @@ export default function Tools() {
     getQuantity,
     updateQuantity,
   } = ProductQuantity()
+
+  const toolsProducts = Product.filter(p => p.category === "Tool");
 
   const [selectedSubcategory, setSelectedSubcategory] = useState('All');
   const [sortBy, setSortBy] = useState('Featured');

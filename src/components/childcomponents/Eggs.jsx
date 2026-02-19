@@ -3,46 +3,12 @@ import { useState, useEffect } from 'react';
 import ProductCard from '../Cards/Product';
 import { useSearchParams } from 'react-router-dom';
 import { ProductQuantity } from '../../hooks/ProductQuantity';
+import {Product } from '../../../src/data/Product.js'
 
 
-const eggsProducts = [
-  {
-    id: 1,
-    name: "Grade A Large Eggs",
-    image: "https://images.unsplash.com/photo-1582721478774-dbb6205b91a0?w=800",
-    price: 180,
-    weight: "Tray of 30",
-    badge: "Fresh",
-    subcategory: "Fresh Eggs",
-  },
-  {
-    id: 2,
-    name: "Organic Free-Range Eggs",
-    image: "https://images.unsplash.com/photo-1627422061883-777637b06b16?w=800",
-    price: 250,
-    originalPrice: 280,
-    weight: "Tray of 30",
-    badge: "Organic",
-    subcategory: "Fresh Eggs",
-  },
-  {
-    id: 3,
-    name: "Fertilized Hatching Eggs",
-    image: "https://images.unsplash.com/photo-1621793409983-3ee090d43b80?w=800",
-    price: 300,
-    weight: "Dozen",
-    subcategory: "Product of Egg",
-  },
-  {
-    id: 4,
-    name: "Brown Country Eggs",
-    image: "https://images.unsplash.com/photo-1587574293340-e0011c4cc336?w=800",
-    price: 200,
-    weight: "Tray of 30",
-    badge: "Local Farm",
-    subcategory: "Fresh Eggs",
-  },
-];
+
+
+
 
 
 export default function Eggs() {
@@ -51,6 +17,8 @@ export default function Eggs() {
           getQuantity,
           updateQuantity,
         } =ProductQuantity()
+
+      const eggsProducts = Product.filter(p => p.category === "Egg");
 
         const [selectedSubcategory, setSelectedSubcategory] = useState('All');
         const [sortBy, setSortBy] = useState('Featured');
